@@ -1,3 +1,5 @@
+import com.sun.jdi.event.StepEvent;
+
 import java.math.BigInteger;
 import java.util.ArrayList;
 
@@ -72,6 +74,54 @@ public class SHA1 {
             }
         }
         return blocks;
+    }
+
+    public String strXor(String s1, String s2){
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < s1.length(); i ++){
+            sb.append(s1.charAt(i) ^ s2.charAt(i));
+        }
+        return sb.toString();
+    }
+
+    public String strInversion(String str){
+        return str.replaceAll("0", "x").replaceAll("1", "0").replaceAll("x", "1");
+    }
+
+    public String strAnd(String s1, String s2){
+        String res = Integer.toBinaryString(Integer.parseInt(s1, 2) & Integer.parseInt(s2, 2));
+        if (res.length() < s1.length()){
+            int d = s1.length() - res.length();
+            StringBuilder sb = new StringBuilder();
+            for (int i = d; i != 0; i--){
+                sb.append("0");
+            }
+            sb.append(res);
+            res = sb.toString();
+        }
+        return res;
+    }
+
+    public String strOr(String s1, String s2){
+        String res = Integer.toBinaryString(Integer.parseInt(s1, 2) | Integer.parseInt(s2, 2));
+        if (res.length() < s1.length()){
+            int d = s1.length() - res.length();
+            StringBuilder sb = new StringBuilder();
+            for (int i = d; i != 0; i--){
+                sb.append("0");
+            }
+            sb.append(res);
+            res = sb.toString();
+        }
+        return res;
+    }
+
+    public String leftRotate(String str, int d){
+        return str.substring(d) + str.substring(0, d);
+    }
+
+    public String rightRotate(String str, int d){
+        return leftRotate(str, str.length() - d);
     }
 
     public String toBinary(String mes){
